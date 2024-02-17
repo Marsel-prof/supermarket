@@ -1,17 +1,31 @@
-import React, {useState} from 'react';
+import React from "react";
+import "@splidejs/splide/dist/css/themes/splide-default.min.css";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
 
-function Image({data}) {
-    const [image]=useState(data)
+function Image({ image }) {
+  const splideOptions = {
+    type: "slide",
+    height: 300,
+    perPage: 1,
+    pagination: false,
+    gap: 20,
+    focus: "center",
+    breakpoints: {
+      600: {
+        height: 200,
+      },
+    },
+  };
 
-    return (
-        <>
-            {image.map((item)=>{
-                return <div className={`card-img text-center`} key={item.id}>
-                    <img className={`mt-2`} width={120} height={100} src={`http://localhost:1337${item.attributes.url}`}/>
-                </div>
-            })}
-        </>
-    );
+  return (
+    <Splide options={splideOptions}>
+      {image.map((item, index) => (
+        <SplideSlide key={index}>
+          <img src={item} className="mt-2" height={300} alt={""} />
+        </SplideSlide>
+      ))}
+    </Splide>
+  );
 }
 
 export default Image;

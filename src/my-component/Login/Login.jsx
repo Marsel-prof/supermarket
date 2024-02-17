@@ -8,43 +8,42 @@ function Login() {
     const navigate = useNavigate()
     let formik = useFormik({
         initialValues: {
-            identifier: '',
-            password: ''
+            username: 'kminchelle',
+            password: '0lelplR'
         },
         onSubmit: async (values) => {
-            let { data } = await axios.post("http://localhost:1337/api/auth/local",values)
-            localStorage.setItem("token", data.jwt)
-            navigate('/home')
+            try {
+                let { data } = await axios.post('https://dummyjson.com/auth/login', values, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                localStorage.setItem("token",data.token)
+                navigate('/home');
+            } catch (error) {
+                console.error('Login failed:', error);
+            }
         }
-        ,
-        validationSchema: Yup.object({
-            identifier: Yup.string()
-                .email('Invalid email address')
-                .required('Email is Required'),
-            password: Yup.string()
-                .required('Password is Required')
-                .matches(/^([A-Z|a-z]|[0-9]){3,}$/, 'Must Contain 8 Characters, must be Uppercase, ' +
-                    'or Lowercase, or Numbers')
-        })
+
     })
     return (
         <div className={`body`}>
             <div className="wrapper">
                 <h2>Login</h2>
                 <form onSubmit={formik.handleSubmit}>
-                    <p className={`text-danger`}>{formik.errors.identifier}</p>
+                    <p className={`text-danger`}>{formik.errors.username}</p>
                     <div className="input-box">
                         <input
-                            type="email"
+                            type="text"
                             className="form-control"
-                            name="identifier"
-                            placeholder="Enter your email"
-                            value={formik.values.identifier}
+                            name="username"
+                            placeholder="Enter your name"
+                            value={formik.values.username}
                             onChange={formik.handleChange}
                         />
                     </div>
-                    <div className="input-box">
                         <p className={`text-danger`}>{formik.errors.password}</p>
+                    <div className="input-box">
                         <input
                             type="password"
                             className="form-control"
@@ -57,7 +56,7 @@ function Login() {
                     <div className="row">
                         <div className="col-md-6">
                             <button type="submit" className="btn btn-success mt-4">
-                                Register
+                                Login
                             </button>
                         </div>
                         <div>

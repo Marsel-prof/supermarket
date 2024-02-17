@@ -1,0 +1,7 @@
+.hover{
+    cursor: pointer;
+    transition: 0.5s;
+}
+.hover:hover{
+    box-shadow: 5px 5px 20px rgba(199, 190, 190, 0.99);
+}

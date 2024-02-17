@@ -9,14 +9,17 @@ function Register() {
     const navigate = useNavigate()
     let formik = useFormik({
         initialValues: {
-            username: '',
-            email: '',
-            password: ''
+            email: "",
+            username: "",
+            password: ""
         },
         onSubmit: async (values) => {
-            let { data } = await axios.post("http://localhost:1337/api/auth/local/register", values)
-
-            navigate('/login')
+            let { data } = await axios.post("https://dummyjson.com/users/add", values, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            console.log(data)
         },
         validationSchema: Yup.object({
             username: Yup.string()
